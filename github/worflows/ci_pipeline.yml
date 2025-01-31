@@ -1,0 +1,20 @@
+library(yaml)
+
+# Our YAML content as a string
+name: Breast Cancer Prediction Pipeline
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install R and dependencies
+        run: Rscript install_dependencies.R
+      - name: Run Tests
+        run: Rscript tests/test_functions.R
+      - name: Train Model
+        run: Rscript R/train_model.R
+      - name: Generate Visualizations
+        run: Rscript R/visualization.R
+      - name: Make Predictions
+        run: Rscript R/predict_cancer.R
